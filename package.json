@@ -3,6 +3,8 @@
   "displayName": "Key Util",
   "description": "Utility tool for keybindings.json",
   "version": "0.0.1",
+  "publisher": "hw104",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.70.0"
   },

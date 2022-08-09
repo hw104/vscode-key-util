@@ -1,11 +1,10 @@
-import { Keybinding, KeyInfo } from "../types/keybinding";
 import * as vscode from "vscode";
-import * as fs from "fs";
 import {
   getKeybindings,
   getKeybindingsPaths,
   writeKeybindings,
 } from "../common";
+import { Keybinding, KeyInfo } from "../types/keybinding";
 
 export function sortKeybidings(kbs: Keybinding[]): Keybinding[] {
   return kbs

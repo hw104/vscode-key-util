@@ -2,23 +2,21 @@ import * as vscode from "vscode";
 import {
   getKeybindings,
   getKeybindingsPaths,
+  keybindingToString,
   writeKeybindings,
 } from "../common";
 import { Keybinding, KeyInfo } from "../types/keybinding";
+import { sortKeybidings } from "./sort";
 
-export function sortKeybidings(kbs: Keybinding[]): Keybinding[] {
-  return kbs
-    .map((e) => ({ info: KeyInfo.fromKeybinding(e), src: e }))
-    .sort((a, b) => a.info.compare(b.info))
-    .map((e) => e.src);
-}
-
-export async function sortHandler(
+export async function mergeCmdAltHandler(
   context: vscode.ExtensionContext
 ): Promise<void> {
   const path = getKeybindingsPaths(context);
   const kbs = getKeybindings(path);
-  const sorted = sortKeybidings(kbs);
+
+  const merged = mergeCmdAlt(kbs);
+  const sorted = sortKeybidings(merged);
+
   const res = await vscode.window.showQuickPick([
     "Save new File",
     "Overwrite keybindings.json",
@@ -39,4 +37,30 @@ export async function sortHandler(
     writeKeybindings(dist, sorted);
     vscode.window.showInformationMessage(`Saved to ${dist}`);
   }
+}
+
+export function mergeCmdAlt(kbs: Keybinding[]): Keybinding[] {
+  const merged = kbs.reduce<Keybinding[]>((prev, current) => {
+    return [
+      ...prev,
+      current,
+      {
+        ...current,
+        key: KeyInfo.fromKeybinding(current).replace("cmd", "alt").toString(),
+      },
+      {
+        ...current,
+        key: KeyInfo.fromKeybinding(current).replace("alt", "cmd").toString(),
+      },
+    ];
+  }, []);
+
+  const deduplicated = Object.values(
+    merged.reduce<Record<string, Keybinding>>(
+      (prev, current) => ({ ...prev, [keybindingToString(current)]: current }),
+      {}
+    )
+  );
+
+  return deduplicated;
 }

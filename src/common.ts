@@ -18,3 +18,9 @@ export function writeKeybindings(path: string, kbs: Keybinding[]) {
   const str = JSON.stringify(kbs, null, 4);
   fs.writeFileSync(path, str);
 }
+
+export function keybindingToString(kb: Keybinding): string {
+  return `{"key":"${kb.key}","command":"${kb.command}"${
+    kb.when == null ? "" : `,"when":"${kb.when}"`
+  }}`;
+}

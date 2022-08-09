@@ -9,7 +9,7 @@ export async function infoHandler(
   const kbs = getKeybindings(path);
   const counter: Record<string, number> = {};
   for (const kb of kbs) {
-    const info = new KeyInfo(kb);
+    const info = KeyInfo.fromKeybinding(kb);
     for (const step of info.steps) {
       for (const key of step.keys) {
         counter[key.src] = (counter[key.src] ?? 0) + 1;

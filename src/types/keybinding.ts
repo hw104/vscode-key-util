@@ -5,10 +5,10 @@ export interface Keybinding {
 }
 
 export class KeyInfo {
-  public readonly steps: KeyCombi[];
+  constructor(public readonly steps: KeyCombi[]) {}
 
-  constructor(public readonly src: Keybinding) {
-    this.steps = src.key.split(" ").map((c) => new KeyCombi(c));
+  static fromKeybinding(src: Keybinding): KeyInfo {
+    return new KeyInfo(src.key.split(" ").map(KeyCombi.fromString));
   }
 
   public toString(): string {
@@ -34,13 +34,24 @@ export class KeyInfo {
 
     return 0;
   }
+
+  public replace(srcKey: string, distKey: string): KeyInfo {
+    return new KeyInfo(
+      this.steps.map(
+        (s) =>
+          new KeyCombi(
+            s.keys.map((k) => new Key(k.is(srcKey) ? distKey : k.src))
+          )
+      )
+    );
+  }
 }
 
 class KeyCombi {
-  public readonly keys: Key[];
-  constructor(private readonly src: string) {
-    this.keys = src.split("+").map((p) => new Key(p));
-    // .sort((a, b) => a.compare(b));
+  constructor(public readonly keys: Key[]) {}
+
+  public static fromString(src: string): KeyCombi {
+    return new KeyCombi(src.split("+").map((p) => new Key(p)));
   }
 
   toString(): string {
@@ -86,8 +97,15 @@ class Key {
     }
     return this.src.localeCompare(other.src);
   }
+
+  is(keyString: string): boolean {
+    return this.src === keyString;
+  }
 }
 
+export function isSame(a: Keybinding, b: Keybinding): boolean {
+  return a.key === b.key && a.command === b.command && a.when === b.when;
+}
 
 /* import * as fs from "fs";
 function main() {

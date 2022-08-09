@@ -23,6 +23,21 @@ export async function infoHandler(
     vscode.ViewColumn.Two
   );
   // <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300" />
+  const rankTable = createTable([
+    ["Key", "Count"],
+    ...sortedCounts.map((c) => [
+      { body: `<kbd>${c[0]}</kbd>` },
+      { body: c[1].toString() },
+    ]),
+  ]);
+  const kbdTable = createTable([
+    ['escape', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+', 'backspace'], // prettier-ignore
+    [" ", "tab", "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "[", "]"], // prettier-ignore
+    [" ", "ctrl", "a", "s", "d", "f", "g", "h", "j", "k", "l", ";", "'", "enter"], // prettier-ignore
+    ["shift", "`", "z", "x", "c", "v", "b", "n", "m", ",", ".", "/", "\\", "shift"], // prettier-ignore
+    [" ", " ", " ", " ", "alt", "cmd", "space", "shift", " ", " ", " ", " ", " ", ""], // prettier-ignore
+  ]);
+
   panel.webview.html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,18 +50,29 @@ export async function infoHandler(
   ${kbs.length}
 
   <h2>Count</h2>
-  <table border="1" cellpadding="6">
-    <tr> 
-    <thead>
-      <th>Key</th><th>Count</th> </tr>
-    </thead>
-    ${sortedCounts.map((c) => `
-    <tr>
-      <td align="center"><kbd>${c[0]}</kbd></td>
-      <td align="center">${c[1]}</td>
-    </tr>`).join('\n')}
-  </table>
-
+  ${rankTable}
+  ${kbdTable}
 </body>
 </html>`;
+}
+
+function createTable(
+  columns: (string | { body: string; params?: string; header?: boolean })[][]
+) {
+  const toCell = (
+    body: string | { body: string; params?: string; header?: boolean }
+  ): string => {
+    if (typeof body === "string") {
+      return `<td align="center">${body}</td>`;
+    }
+
+    const tag = body.header ? "th" : "td";
+
+    return `<${tag} align="center" ${body.params}>${body.body}</${tag}>`;
+  };
+  return `
+<table border="1" cellpadding="6">
+    ${columns.map((c) => `<tr>${c.map(toCell).join("\n")}</tr>`).join("\n")}
+</table>
+`;
 }

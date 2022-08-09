@@ -10,14 +10,14 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:key-util.helloWorld"
+    "onCommand:key-util.sort"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "key-util.helloWorld",
-        "title": "Hello World"
+        "command": "key-util.sort",
+        "title": "Key Util: sort keybindings.json"
       }
     ]
   },

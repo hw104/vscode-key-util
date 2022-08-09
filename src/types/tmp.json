@@ -1,0 +1,14 @@
+[
+    {
+      "key": "ctrl+x w",
+      "command": "workbench.action.files.saveAs"
+    },
+  {
+    "key": "ctrl+x ctrl+f",
+    "command": "workbench.action.files.openFileFolder"
+  },
+  {
+    "key": "ctrl+x y",
+    "command": "multiclip.list"
+  }
+]

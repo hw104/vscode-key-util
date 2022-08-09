@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "publisher": "hw104",
   "license": "MIT",
+  "repository": "https://github.com/hw104/vscode-key-util.git",
   "engines": {
     "vscode": "^1.70.0"
   },

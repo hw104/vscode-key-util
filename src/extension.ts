@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { infoHandler } from "./commands/info";
 import { sortHandler } from "./commands/sort";
 
 export function activate(context: vscode.ExtensionContext) {
@@ -6,6 +7,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("key-util.sort", () => sortHandler(context))
+  );
+  context.subscriptions.push(
+    vscode.commands.registerCommand("key-util.info", () => infoHandler(context))
   );
 }
 

@@ -10,14 +10,21 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:key-util.sort"
+    "onCommand:key-util.sort",
+    "onCommand:key-util.info"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "key-util.sort",
-        "title": "Key Util: sort keybindings.json"
+        "shortTitle": "Sort keybindings.json",
+        "title": "Key Util: Sort keybindings.json"
+      },
+      {
+        "command": "key-util.info",
+        "shortTitle": "Info keybindings.json",
+        "title": "Key Util: Info keybindings.json"
       }
     ]
   },

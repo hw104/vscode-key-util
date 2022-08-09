@@ -11,7 +11,8 @@
   ],
   "activationEvents": [
     "onCommand:key-util.sort",
-    "onCommand:key-util.info"
+    "onCommand:key-util.info",
+    "onCommand:key-util.mergeCmdAlt"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -25,6 +26,11 @@
         "command": "key-util.info",
         "shortTitle": "Info keybindings.json",
         "title": "Key Util: Info keybindings.json"
+      },
+      {
+        "command": "key-util.mergeCmdAlt",
+        "shortTitle": "Merge Cmd and Alt",
+        "title": "Key Util: Merge Cmd and Alt"
       }
     ]
   },

@@ -67,7 +67,7 @@ export async function infoHandler(
       col.map((cel) => {
         const body: string = typeof cel === "string" ? cel : cel.body;
         const params = typeof cel === "string" ? "" : cel.params;
-        const grad = (counter[body] ?? 0) / 200;
+        const grad = (counter[body] ?? 0) / 100;
         const rgb = getGradi(grad);
         const bg = grad !== 0 ? `bgcolor="#${rgb}"` : "";
         return {

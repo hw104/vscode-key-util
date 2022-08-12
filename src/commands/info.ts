@@ -118,26 +118,11 @@ input.show-tooltip:hover + span {
   ${style}
 </head>
 <body>
-${createTable(
-  Array.from({ length: 10 }).map((_, i) =>
-    Array.from({ length: 10 }).map((__, j) => {
-      const g = getGradi((i * 10 + j) / 100);
-      return { body: `${i * 10 + j} #${g}`, params: `bgcolor="#${g}"` };
-    })
-  )
-  // .map((_, i) => getGradi(i, 100))
-  // .map((c) => ({ body: c, params: `bgcolor="#${c}"` })),
-)}
   <h1 title="hoge">keybindings.json Info</h1>
   <h2>Configurations</h2>
   ${kbs.length}
-  <input type="text" class="show-tooltip">
-  <span>Some Text inside... </span>
-  <input type="text"><!--dont need on hover for this text field-->
-  <span>please enter </span>
   <h2>Count</h2>
   ${rankTable}
-  ${kbdTable}
 </body>
 </html>`;
 }

@@ -60,5 +60,8 @@
     "mocha": "^10.0.0",
     "typescript": "^4.7.4",
     "vsce": "^2.10.0"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.1.0"
   }
 }

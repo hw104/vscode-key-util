@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
 import { Keybinding } from "./types/keybinding";
+import * as JSONC from 'jsonc-parser';
 
 export function getKeybindingsPaths(context: vscode.ExtensionContext): string {
   const globalStorage = context.globalStorageUri.path;
@@ -11,7 +12,7 @@ export function getKeybindingsPaths(context: vscode.ExtensionContext): string {
 }
 
 export function getKeybindings(path: string): Keybinding[] {
-  return JSON.parse(fs.readFileSync(path).toString());
+  return JSONC.parse(fs.readFileSync(path).toString());
 }
 
 export function writeKeybindings(path: string, kbs: Keybinding[]) {

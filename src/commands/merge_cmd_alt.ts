@@ -6,7 +6,7 @@ import {
   writeKeybindings,
 } from "../common";
 import { Keybinding, KeyInfo } from "../types/keybinding";
-import { sortKeybidings } from "./sort";
+import { compareKeybinding } from "./sort";
 
 export async function mergeCmdAltHandler(
   context: vscode.ExtensionContext
@@ -14,8 +14,7 @@ export async function mergeCmdAltHandler(
   const path = getKeybindingsPaths(context);
   const kbs = getKeybindings(path);
 
-  const merged = mergeCmdAlt(kbs);
-  const sorted = sortKeybidings(merged);
+  const merged = mergeCmdAlt(kbs).sort(compareKeybinding);
 
   const res = await vscode.window.showQuickPick([
     "Save new File",
@@ -34,7 +33,7 @@ export async function mergeCmdAltHandler(
     }
   }
   if (dist != null) {
-    writeKeybindings(dist, sorted);
+    writeKeybindings(dist, merged);
     vscode.window.showInformationMessage(`Saved to ${dist}`);
   }
 }

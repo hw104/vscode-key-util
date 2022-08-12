@@ -106,15 +106,3 @@ class Key {
 export function isSame(a: Keybinding, b: Keybinding): boolean {
   return a.key === b.key && a.command === b.command && a.when === b.when;
 }
-
-/* import * as fs from "fs";
-function main() {
-  const path = process.argv[2];
-  const keybindings = (
-    JSON.parse(fs.readFileSync(path).toString()) as Keybinding[]
-  ).map((e) => new KeyInfo(e));
-  const sorted = keybindings.sort((a, b) => a.compare(b)).map((e) => e.src);
-  console.log(JSON.stringify(sorted, null, 2));
-}
-main();
- */

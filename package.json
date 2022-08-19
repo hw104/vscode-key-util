@@ -15,7 +15,8 @@
   "activationEvents": [
     "onCommand:key-util.sort",
     "onCommand:key-util.info",
-    "onCommand:key-util.mergeCmdAlt"
+    "onCommand:key-util.applyAlias",
+    "onCommand:key-util.applyAllAliases"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -31,9 +32,26 @@
         "title": "Key Util: Info keybindings.json"
       },
       {
-        "command": "key-util.mergeCmdAlt",
-        "shortTitle": "Merge Cmd and Alt",
-        "title": "Key Util: Merge Cmd and Alt"
+        "command": "key-util.applyAlias",
+        "shortTitle": "Apply alias",
+        "title": "Key Util: Apply alias"
+      },
+      {
+        "command": "key-util.applyAllAliases",
+        "shortTitle": "Apply al aliases",
+        "title": "Key Util: Apply all aliases in configuration"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "Key Util",
+        "properties": {
+          "key-util.aliases": {
+            "type": "array",
+            "description": "Key aliases used by `key-util.applyAllAliases`. e.g. `cmd=alt`",
+            "markdownDescription": "Key aliases used by `key-util.applyAllAliases`. e.g. `cmd=alt`"
+          }
+        }
       }
     ]
   },

@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import {
   getKeybindings,
   getKeybindingsPaths,
+  showSavePrompt,
   writeKeybindings,
 } from "../common";
 import { Keybinding, KeyInfo } from "../types/keybinding";
@@ -12,22 +13,8 @@ export async function sortHandler(
   const path = getKeybindingsPaths(context);
   const kbs = getKeybindings(path);
   const sorted = kbs.sort(compareKeybinding);
-  const res = await vscode.window.showQuickPick([
-    "Save new File",
-    "Overwrite keybindings.json",
-  ]);
-  let dist: string | undefined;
-  if (res === "Overwrite keybindings.json") {
-    dist = path;
-  }
-  if (res === "Save new File") {
-    const distUri = await vscode.window.showSaveDialog({
-      saveLabel: "Save new file",
-    });
-    if (distUri != null) {
-      dist = distUri.path;
-    }
-  }
+
+  const dist = await showSavePrompt(path);
   if (dist != null) {
     writeKeybindings(dist, sorted);
     vscode.window.showInformationMessage(`Saved to ${dist}`);

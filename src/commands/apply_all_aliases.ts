@@ -13,7 +13,7 @@ export async function applyAllAliasesHandler(
   context: vscode.ExtensionContext
 ): Promise<void> {
   const path = getKeybindingsPaths(context);
-  const kbs = getKeybindings(path);
+  let kbs = getKeybindings(path);
   const aliases = vscode.workspace
     .getConfiguration("key-util")
     .get<string[]>("aliases");
@@ -24,9 +24,10 @@ export async function applyAllAliasesHandler(
     throw createErrorWithAction("Invalid Aliases Configuration");
   }
 
-  let newKb = kbs;
   for (const alias of aliases) {
     const [aliasKey, originKey] = alias.split("=");
+    console.log(`${aliasKey} -> ${originKey}`);
+
     if (
       aliasKey == null ||
       aliasKey.length === 0 ||
@@ -38,12 +39,12 @@ export async function applyAllAliasesHandler(
       );
     }
 
-    newKb = calcAlias(kbs, originKey, aliasKey);
+    kbs = calcAlias(kbs, originKey, aliasKey);
   }
-  newKb = newKb.sort(compareKeybinding);
+  kbs = kbs.sort(compareKeybinding);
 
   const dist = await showSavePrompt(path);
-  writeKeybindings(dist, newKb);
+  writeKeybindings(dist, kbs);
   vscode.window.showInformationMessage(`Saved to ${dist}`);
 }
 
